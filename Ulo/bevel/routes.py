@@ -15,7 +15,7 @@ def index():
 
 # Admin ection
 
-@bevel.route("/register/<email>/<password>/<name>", method=['POST', 'GET'])
+@bevel.route("/register/<email>/<password>/<name>", methods=['POST', 'GET'])
 def register(email, password, name):
     auth = Admin.query.filter_by(email=email).first()
     if auth:
@@ -29,7 +29,7 @@ def register(email, password, name):
     return jsonify(js)
 
 
-@bevel.route("/login/<email>/<password>", method=['POST', 'GET'])
+@bevel.route("/login/<email>/<password>", methods=['POST', 'GET'])
 def login(email, password):
     data = Admin.query.filter_by(email=email).first()
     if data and bcrypt.check_password_hash(data.password, password):
@@ -42,7 +42,7 @@ def login(email, password):
 
 # Users Sections
 
-@bevel.route("/login_user/<email>/<password>", method=['POST', 'GET'])
+@bevel.route("/login_user/<email>/<password>", methods=['POST', 'GET'])
 def login_user(email, password):
     data = User.query.filter_by(email=email).first()
 
@@ -53,7 +53,7 @@ def login_user(email, password):
     return jsonify(js)
 
 
-@bevel.route("/create_user/<email>/<password>", method=['POST', 'GET'])
+@bevel.route("/create_user/<email>/<password>", methods=['POST', 'GET'])
 def create_user(email, password):
     auth = User.query.filter_by(email=email).first()
     if auth:
@@ -68,7 +68,7 @@ def create_user(email, password):
     return jsonify(js)
 
 
-@bevel.route("/delete_user/<email>", method=['POST', 'GET'])
+@bevel.route("/delete_user/<email>", methods=['POST', 'GET'])
 def delete_user(email):
     data = User.query.filter_by(email=email).first()
     delt = User.query.get(data.id)
@@ -78,7 +78,7 @@ def delete_user(email):
     return jsonify(js)
 
 
-@bevel.route("/generate_chat/<content>", method=['POST', 'GET'])
+@bevel.route("/generate_chat/<content>", methods=['POST', 'GET'])
 def generate_chat(content, history=[]):
     # try:
         genai.configure(api_key=current_app.config["GEMINI_API_KEY"])

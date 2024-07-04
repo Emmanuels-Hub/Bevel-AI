@@ -19,13 +19,13 @@ def index():
 def register(email, password, name):
     auth = Admin.query.filter_by(email=email).first()
     if auth:
-        js = {'warning': 'Email Already Exists.'}
+        js = {'satusCode': 419, 'status': 'warning', 'message': 'Email Already Exists.'}
     else:
         hash_password = bcrypt.generate_password_hash(password).decode('utf-8') 
         data = Admin(email=email, password=hash_password, school_name=name)
         db.session.add(data)
         db.session.commit()
-        js = {'success': 'Account created successful'}
+        js = {'statusCode': 100, 'status':'success', 'message': 'Account created successful'}
     return jsonify(js)
 
 
@@ -33,9 +33,9 @@ def register(email, password, name):
 def login(email, password):
     data = Admin.query.filter_by(email=email).first()
     if data and bcrypt.check_password_hash(data.password, password):
-        js = {'success': 'User logged in'}
+        js = {'statusCode':100, 'status' : 'success', 'message': 'User logged in'}
     else:
-        js = {'failed': 'Incorrect Login details.'}
+        js = {'statusCode': 404, 'status':'failed', 'message': 'Incorrect Login details.'}
     return jsonify(js)
 
 
@@ -47,24 +47,24 @@ def login_user(email, password):
     data = User.query.filter_by(email=email).first()
 
     if data and bcrypt.check_password_hash(data.password, password):
-        js = {'success': 'User logged in'}
+        js = {'statusCode':100, 'status' : 'success', 'message': 'User logged in'}
     else:
-        js = {'failed': 'Incorrect Login details.'}
+        js = {'statusCode': 404, 'status':'failed', 'message': 'Incorrect Login details.'}
     return jsonify(js)
 
 
-@bevel.route("/create_user/<email>/<password>", methods=['POST', 'GET'])
-def create_user(email, password):
+@bevel.route("/create_user/<email>/<password>/<name>", methods=['POST', 'GET'])
+def create_user(email, password, name):
     auth = User.query.filter_by(email=email).first()
     if auth:
-        js = {'warning': 'User already Exist'}
+        js = {'satusCode': 419, 'status': 'warning', 'message': 'Email Already Exists.'}
     else:
-        js = {'warning': 'Email Already Exists.'}
+        
         hash_password = bcrypt.generate_password_hash(password).decode('utf-8') 
-        data = User(email=email, password= hash_password, name='bevel Academy')
+        data = User(email=email, password= hash_password, name=name)
         db.session.add(data)
         db.session.commit()
-        js = {'success': 'Account created successful'}
+        js = {'statusCode': 100, 'status':'success', 'message': 'Account created successful'}
     return jsonify(js)
 
 
@@ -74,7 +74,7 @@ def delete_user(email):
     delt = User.query.get(data.id)
     db.session.delete(delt)
     db.session.commit()
-    js = {'success': 'Account Deleted successful'}
+    js = {'statusCode': 100, 'status':'success', 'message': 'Account Deleted successful'}
     return jsonify(js)
 
 

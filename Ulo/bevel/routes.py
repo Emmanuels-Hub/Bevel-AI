@@ -61,7 +61,7 @@ def create_user(email, password):
     else:
         js = {'warning': 'Email Already Exists.'}
         hash_password = bcrypt.generate_password_hash(password).decode('utf-8') 
-        data = User(email=email, password= hash_password)
+        data = User(email=email, password= hash_password, name='bevel Academy')
         db.session.add(data)
         db.session.commit()
         js = {'success': 'Account created successful'}

@@ -54,14 +54,19 @@ def login_user(email, password):
 
 
 @bevel.route("/create_user/<email>/<password>/<name>", methods=['POST', 'GET'])
-def create_user(email, password, name):
+def create_user(email, password, name, firstname, lastname):
     auth = User.query.filter_by(email=email).first()
     if auth:
         js = {'satusCode': 419, 'status': 'warning', 'message': 'Email Already Exists.'}
     else:
         
         hash_password = bcrypt.generate_password_hash(password).decode('utf-8') 
-        data = User(email=email, password= hash_password, name=name)
+        data = User(
+            email=email,
+              password= hash_password,
+                school_name=name,
+                  firstname=firstname,
+                  lastname=lastname)
         db.session.add(data)
         db.session.commit()
         js = {'statusCode': 100, 'status':'success', 'message': 'Account created successful'}

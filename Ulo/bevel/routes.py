@@ -64,7 +64,7 @@ def create_user(email, password, name, firstname, lastname):
         data = User(
             email=email,
               password= hash_password,
-                school_name=name,
+                 school_name=name,
                   firstname=firstname,
                   lastname=lastname)
         db.session.add(data)

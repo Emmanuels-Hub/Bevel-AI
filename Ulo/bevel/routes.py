@@ -53,7 +53,7 @@ def login_user(email, password):
     return jsonify(js)
 
 
-@bevel.route("/create_user/<email>/<password>/<name>", methods=['POST', 'GET'])
+@bevel.route("/create_user/<email>/<password>/<name>/<firstname>/<lastname>", methods=['POST', 'GET'])
 def create_user(email, password, name, firstname, lastname):
     auth = User.query.filter_by(email=email).first()
     if auth:

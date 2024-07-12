@@ -42,8 +42,13 @@ def login(email, password):
 
 # Users Sections
 
-@bevel.route("/login_user/<email>/<password>", methods=['POST', 'GET'])
-def login_user(email, password):
+@bevel.route("/login_user/", methods=['POST', 'GET'])
+def login_user():
+    data = request.get_json()
+
+    email = data.get('email')
+    password = data.get('password')
+
     data = User.query.filter_by(email=email).first()
 
     if data and bcrypt.check_password_hash(data.password, password):

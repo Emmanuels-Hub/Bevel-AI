@@ -60,13 +60,18 @@ def login_user():
 
 @bevel.route("/create_user/", methods=['POST', 'GET'])
 def create_user():
-    data = request.get_json()
+    # data = request.get_json()
 
-    email = data.get('email')
-    password = data.get('password')
-    name = data.get('name')
-    firstname = data.get('firstname')
-    lastname = data.get('lastname')
+    # email = data.get('email')
+    # password = data.get('password')
+    # name = data.get('name')
+    # firstname = data.get('firstname')
+    # lastname = data.get('lastname')
+    email = 'Justin'
+    password = 'qwerty'
+    name = 'Bevel'
+    firstname = 'John'
+    lastname = 'Paul'
 
     auth = User.query.filter_by(email=email).first()
     if auth:

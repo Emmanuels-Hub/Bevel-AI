@@ -58,8 +58,16 @@ def login_user():
     return jsonify(js)
 
 
-@bevel.route("/create_user/<email>/<password>/<name>/<firstname>/<lastname>", methods=['POST', 'GET'])
-def create_user(email, password, name, firstname, lastname):
+@bevel.route("/create_user/", methods=['POST', 'GET'])
+def create_user():
+    data = request.get_json()
+
+    email = data.get('email')
+    password = data.get('password')
+    name = data.get('name')
+    firstname = data.get('firstname')
+    lastname = data.get('lastname')
+
     auth = User.query.filter_by(email=email).first()
     if auth:
         js = {'satusCode': 419, 'status': 'warning', 'message': 'Email Already Exists.'}

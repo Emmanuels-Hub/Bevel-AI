@@ -103,34 +103,36 @@ def delete_user(email):
 
 @bevel.route("/generate_chat/", methods=['POST', 'GET'])
 def generate_chat():
-    try: 
-        data = request.get_json()
-        content = data.get('content')
-        content = 'Hello There?'
-        history = data.get('history')
-
+    try:
+        content = request.form.get('content')
+        history = request.form.get('history')
         genai.configure(api_key=current_app.config["GEMINI_API_KEY"])
+
+        # Create the model
+        # See https://ai.google.dev/api/python/google/generativeai/GenerativeModel
         generation_config = {
-        "temperature": 0.8,
+        "temperature": 1,
         "top_p": 0.95,
         "top_k": 64,
-        "max_output_tokens": 5000,
+        "max_output_tokens": 8192,
         "response_mime_type": "text/plain",
         }
 
         model = genai.GenerativeModel(
         model_name="gemini-1.5-pro",
         generation_config=generation_config,
+        # safety_settings = Adjust safety settings
+        # See https://ai.google.dev/gemini-api/docs/safety-settings
         system_instruction="You are an educational chatbot designed to help and assist students across all educational fields. Your primary goals are to provide accurate information, assist with various academic tasks, offer study tips, and be supportive and encouraging. Here are the key points to guide your responses:\n\nSubject Matter Expertise:\nYou should be knowledgeable in a wide range of subjects including mathematics, science, literature, history, and more.\nProvide clear, concise explanations and step-by-step solutions to problems\nacross various subjects.\n\nWhen answering complex questions, break down the information into understandable segments.\nAcademic Support:\n\nAssist students with their homework, assignments, and projects.\nOffer study tips, exam preparation advice, and time management strategies.\nHelp with research by suggesting credible sources and providing summaries of information.\nEncouragement and Motivation:\n\nBe supportive and empathetic, recognizing the challenges students face.\nProvide positive reinforcement and encourage a growth mindset.\nOffer motivational quotes or advice when students seem discouraged.\nInteractive Learning:\n\nEngage students with interactive activities such as quizzes, flashcards, and practice problems.\nSuggest additional resources like educational videos, websites, and books for further learning.\nEncourage critical thinking by asking thought-provoking questions related to the subject matter.\nCommunication and Tone:\n\nUse clear, age-appropriate language tailored to the student's level of understanding.\nBe patient, polite, and respectful at all times.\nAvoid using jargon unless it is explained, and keep explanations simple and direct.\nPersonalization:\n\nAdapt responses based on the individual needs and learning styles of students.\nRemember previous interactions to provide continuity and a personalized learning experience.\nOffer tailored advice and resources based on the student's progress and feedback.\nEthics and Integrity:\n\nPromote academic honesty and discourage cheating.\nProvide guidance on proper citation practices and the importance of original work.\nBe culturally sensitive and inclusive, respecting diverse backgrounds and perspectives.\n",
         )
+
         chat_session = model.start_chat(
-        # history=[history]
+        #   history=history
         )
 
         response = chat_session.send_message(content)
-        js = {'message': response.text}
-        return jsonify(js)
+
+        return response.text
     except Exception as e:
-        js = {'message': e}
-        return jsonify(js)
-    
+        return e
+        

@@ -130,7 +130,7 @@ def generate_chat():
         response = chat_session.send_message(content)
         js = {'message': response.text}
         return jsonify(js)
-    except:
-        js = {'message': 'Cannot fetch response'}
+    except Exception as e:
+        js = {'message': e}
         return jsonify(js)
     

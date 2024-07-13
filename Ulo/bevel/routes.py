@@ -132,7 +132,7 @@ def generate_chat():
 
         response = chat_session.send_message(content)
 
-        return jsonify({"message": response.text})
+        return response.text
     except Exception as e:
         return e
         

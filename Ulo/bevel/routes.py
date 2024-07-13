@@ -105,8 +105,8 @@ def delete_user(email):
 def generate_chat():
     try: 
         data = request.get_json()
-
         content = data.get('content')
+        content = 'Hello There?'
         history = data.get('history')
 
         genai.configure(api_key=current_app.config["GEMINI_API_KEY"])

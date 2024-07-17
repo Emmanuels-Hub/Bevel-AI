@@ -106,6 +106,7 @@ def generate_chat():
     try:
         content = request.form.get('content')
         history = request.form.get('history')
+        
         genai.configure(api_key=current_app.config["GEMINI_API_KEY"])
 
         # Create the model
@@ -127,7 +128,7 @@ def generate_chat():
         )
 
         chat_session = model.start_chat(
-        #   history=history
+          history=history
         )
 
         response = chat_session.send_message(content)

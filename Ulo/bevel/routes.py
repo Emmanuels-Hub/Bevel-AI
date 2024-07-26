@@ -133,5 +133,5 @@ def generate_audio():
 
         return jsonify({"content": response.text})
     except Exception as e:
-        return jsonify({"error": e})
+        return e
         

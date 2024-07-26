@@ -104,10 +104,13 @@ def delete_user(email):
 @bevel.route("/generate_audio/", methods=['POST', 'GET'])
 def generate_audio():
     try:
+        data = request.get_json()
+
         genai.configure(api_key=current_app.config["GEMINI_API_KEY"])
-        filepath = ''
-        prompt = 'Hello Here'
-        mime_type = ''
+        filepath = data.get('file')
+        prompt = data.get('prompt')
+        mime_type = data.get('mime')
+        
         generation_config = {
         "temperature": 1,
         "top_p": 0.95,

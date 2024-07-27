@@ -6,3 +6,4 @@ class Config:
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     GEMINI_API_KEY = 'AIzaSyD_SHv2ZN4dZnfqxuxrkqqy_aaIcO85W_4'
+    UPLOAD_FOLDER = 'uploads'

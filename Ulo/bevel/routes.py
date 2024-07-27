@@ -101,7 +101,7 @@ def delete_user(email):
     return jsonify(js)
 
 
-@bevel.route("/generate_audio/", methods=['POST', 'GET'])
+@bevel.route("/generate_media/", methods=['POST', 'GET'])
 def generate_audio():
     try:
         genai.configure(api_key=current_app.config["GEMINI_API_KEY"])
@@ -147,9 +147,3 @@ def generate_audio():
     except Exception as e:
         return e
     
-@bevel.route("/generate/", methods=['POST', 'GET'])
-def generate():
-    filepath = request.files['file']
-    prompt = request.form.get('prompt')
-    mime_type = request.form.get('mime')
-    return f"{filepath.name}, {prompt}, {mime_type}"

@@ -149,8 +149,5 @@ def generate_audio():
     
 @bevel.route("/delete_media/")
 def delete_media():
-    con, exe =delete_media_files()
-    if con:
-        return 'Media files deleted successful'
-    else:
-        return exe
+    con  = delete_media_files()
+    return con

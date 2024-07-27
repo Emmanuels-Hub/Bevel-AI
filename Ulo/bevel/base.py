@@ -12,6 +12,6 @@ def delete_media_files():
         files = glob.glob(os.path.join('uploads', '*'))
         for file in files:
             os.remove(file)
-        return True
+        return 'Deleted Successful'
     except Exception as e:
-        return False, e
+        return e

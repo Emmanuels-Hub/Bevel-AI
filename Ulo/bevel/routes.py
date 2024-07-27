@@ -1,6 +1,6 @@
 from flask import current_app, render_template, request, Blueprint, jsonify
 from Ulo import db, bcrypt
-from Ulo.bevel.base import upload_to_gemini
+from Ulo.bevel.base import delete_media_files, upload_to_gemini
 from Ulo.model import User, Admin
 import os
 import google.generativeai as genai
@@ -147,3 +147,10 @@ def generate_audio():
     except Exception as e:
         return e
     
+@bevel.route("/delete_media/")
+def delete_media():
+    con, exe =delete_media_files()
+    if con:
+        return 'Media files deleted successful'
+    else:
+        return exe

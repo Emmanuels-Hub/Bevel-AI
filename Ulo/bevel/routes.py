@@ -12,8 +12,8 @@ def index():
 
 # Admin section
 
-@bevel.route("/bevel/register/", methods=['POST', 'GET'])
-def register():
+@bevel.route("/register/<sch>/", methods=['POST', 'GET'])
+def register(sch):
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
@@ -31,8 +31,8 @@ def register():
     return jsonify(js)
 
 
-@bevel.route("/bevel/login/", methods=['POST', 'GET'])
-def login():
+@bevel.route("/login/<sch>/", methods=['POST', 'GET'])
+def login(sch):
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
@@ -48,23 +48,24 @@ def login():
 
 # Users Sections
 
-@bevel.route("/login_user/", methods=['POST', 'GET'])
-def login_user():
-    data = request.get_json()
-    email = data.get('email')
-    password = data.get('password')
+@bevel.route("/login_user/<sch>/", methods=['POST', 'GET'])
+def login_user(sch):
+    if sch == 'Bevel':
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
 
-    auth = User.query.filter_by(email=email).first()
+        auth = User.query.filter_by(email=email).first()
 
-    if auth and bcrypt.check_password_hash(auth.password, password):
-        js = {'statusCode':100, 'status' : 'success', 'message': 'User logged in'}
-    else:
-        js = {'statusCode': 404, 'status':'failed', 'message': 'Incorrect Login details.'}
-    return jsonify(js)
+        if auth and bcrypt.check_password_hash(auth.password, password):
+            js = {'statusCode':100, 'status' : 'success', 'message': 'User logged in'}
+        else:
+            js = {'statusCode': 404, 'status':'failed', 'message': 'Incorrect Login details.'}
+        return jsonify(js)
 
 
-@bevel.route("/bevel/create_user/", methods=['POST', 'GET'])
-def create_user():
+@bevel.route("/create_user/<sch>/", methods=['POST', 'GET'])
+def create_user(sch):
     # info = request.get_json()
 
     # email = info.get('email')
@@ -97,8 +98,10 @@ def create_user():
     return jsonify(js)
 
 
-@bevel.route("/bevel/delete_user/", methods=['POST', 'GET'])
-def delete_user(email):
+@bevel.route("/delete_user/<sch>/", methods=['POST', 'GET'])
+def delete_user(sch):
+    info = request.get_json()
+    email = info.get('email')
     data = User.query.filter_by(email=email).first()
     delt = User.query.get(data.id)
     db.session.delete(delt)

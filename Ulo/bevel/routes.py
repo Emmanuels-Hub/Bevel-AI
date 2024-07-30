@@ -63,7 +63,7 @@ def login_user():
     return jsonify(js)
 
 
-@bevel.route("/create_user/", methods=['POST', 'GET'])
+@bevel.route("/bevel/create_user/", methods=['POST', 'GET'])
 def create_user():
     # info = request.get_json()
 
@@ -97,7 +97,7 @@ def create_user():
     return jsonify(js)
 
 
-@bevel.route("bevel/delete_user/", methods=['POST', 'GET'])
+@bevel.route("/bevel/delete_user/", methods=['POST', 'GET'])
 def delete_user(email):
     data = User.query.filter_by(email=email).first()
     delt = User.query.get(data.id)

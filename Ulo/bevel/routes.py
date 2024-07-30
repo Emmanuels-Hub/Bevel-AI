@@ -48,7 +48,7 @@ def login():
 
 # Users Sections
 
-@bevel.route("/bevel/login_user/", methods=['POST', 'GET'])
+@bevel.route("/login_user/", methods=['POST', 'GET'])
 def login_user():
     data = request.get_json()
     email = data.get('email')

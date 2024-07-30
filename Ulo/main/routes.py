@@ -31,7 +31,6 @@ def generate_audio():
         "top_k": 64,
         "max_output_tokens": 8192,
         "response_mime_type": "text/plain",
-
         }
 
         model = genai.GenerativeModel(
@@ -57,6 +56,7 @@ def generate_audio():
     except Exception as e:
         return e
     
+
 @main.route("/delete_media/")
 def delete_media():
     con  = delete_media_files()

@@ -1,5 +1,4 @@
 import os
-import mimetypes
 from flask import current_app, render_template, request, Blueprint
 import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold

@@ -15,3 +15,8 @@ def delete_media_files():
         return 'Deleted Successful'
     except Exception as e:
         return e
+    
+def filter_text(text):
+     result = text.replace('**','')
+     result = result.replace('*', '')
+     return result

@@ -79,13 +79,11 @@ def generate():
     safety_settings=safety_settings,
     )
 
-    response = model.generate_content(history)
+    chat_session = model.start_chat(
+    history=history
+    )
 
-    # chat_session = model.start_chat(
-    # history=history
-    # )
-
-    # response = chat_session.send_message(prompt)
+    response = chat_session.send_message(prompt)
     result = filter_text(response.text)
     return result
     

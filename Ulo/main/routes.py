@@ -44,7 +44,7 @@ def generate_media():
     model_name="gemini-1.5-flash",
     generation_config=generation_config,
     system_instruction=system_instruction,
-    safety_settings=safety_settings,
+    # safety_settings=safety_settings,
     )
 
     media = upload_to_gemini(f"{current_app.config['UPLOAD_FOLDER']}/{filename}", mime_type=mime_type)

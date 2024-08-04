@@ -30,7 +30,7 @@ def index():
 
 
 @main.route("/generate_media/", methods=['POST', 'GET'])
-def generate_media():
+async def generate_media():
     genai.configure(api_key=current_app.config["GEMINI_API_KEY"])
     filepath = request.files['file']
     prompt = request.form.get('prompt')
@@ -47,7 +47,7 @@ def generate_media():
     # safety_settings=safety_settings,
     )
 
-    media = upload_to_gemini(f"{current_app.config['UPLOAD_FOLDER']}/{filename}", mime_type=mime_type)
+    media = await upload_to_gemini(f"{current_app.config['UPLOAD_FOLDER']}/{filename}", mime_type=mime_type)
     chat_session = model.start_chat(
     history=
         [

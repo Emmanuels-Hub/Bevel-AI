@@ -52,7 +52,7 @@ def generate_media():
    
     while media.state.name == "PROCESSING":
         print('.', end='')
-        time.sleep(1000)
+        time.sleep(100)
         video_file = genai.get_file(media.name)
 
     if media.state.name == "FAILED":

@@ -49,11 +49,7 @@ def generate_media():
     )
 
     media = upload_to_gemini(f"{current_app.config['UPLOAD_FOLDER']}/{filename}", mime_type=mime_type)
-   
-    while media.state.name == "PROCESSING":
-        print('.', end='')
-        time.sleep(100)
-        video_file = genai.get_file(media.name)
+
 
     if media.state.name == "FAILED":
         return 'File failed to Upload.'

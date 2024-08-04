@@ -1,4 +1,5 @@
 import os
+import time
 from flask import current_app, render_template, request, Blueprint
 import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
@@ -30,7 +31,7 @@ def index():
 
 
 @main.route("/generate_media/", methods=['POST', 'GET'])
-async def generate_media():
+def generate_media():
     genai.configure(api_key=current_app.config["GEMINI_API_KEY"])
     filepath = request.files['file']
     prompt = request.form.get('prompt')
@@ -47,7 +48,16 @@ async def generate_media():
     # safety_settings=safety_settings,
     )
 
-    media = await upload_to_gemini(f"{current_app.config['UPLOAD_FOLDER']}/{filename}", mime_type=mime_type)
+    media = upload_to_gemini(f"{current_app.config['UPLOAD_FOLDER']}/{filename}", mime_type=mime_type)
+   
+    while media.state.name == "PROCESSING":
+        print('.', end='')
+        time.sleep(30)
+        video_file = genai.get_file(media.name)
+
+    if media.state.name == "FAILED":
+        return 'File failed to Upload.'
+
     chat_session = model.start_chat(
     history=
         [

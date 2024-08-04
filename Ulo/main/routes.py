@@ -58,17 +58,7 @@ def generate_media():
     if media.state.name == "FAILED":
         return 'File failed to Upload.'
 
-    chat_session = model.start_chat(
-    history=
-        [
-            {
-                "role": "user",
-                "parts": [ media, prompt ],
-            },
-        
-        ]
-    )
-    response = chat_session.send_message(prompt)
+    response = model.generate_content([media, prompt], request_options={"timeout": 600})
 
     result = filter_text(response.text)
     return result
